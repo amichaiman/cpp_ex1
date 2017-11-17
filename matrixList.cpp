@@ -1,6 +1,6 @@
 #include "matrixList.h"
 
-LinkedM *find(LinkedM *cur,string name)
+LinkedM *find(LinkedM *cur,const string name)
 {
     if (!cur)
         return NULL;
@@ -43,11 +43,14 @@ Matrix *getMatrix()
 {
     string name;
     int size;
-    cin >> name;
-    cin >> size;
     
+    cin >> name;
     if (!isLegalName(name))
         return NULL;
+    
+    cin >> size;
+    
+    
     if (size < 0)
         return NULL;
     
@@ -62,25 +65,28 @@ Matrix *getMatrix()
             if (j != size-1)
                 if (cin.get() != ' ')
                 {
-                    clearBuffer();
+                    cout.flush();
                     return NULL;
                 }
             if (j == size-1)
                 if (cin.get() != '\n')
                 {
-                    clearBuffer();
+                    cout.flush();
                     return NULL;
                 }
                 
             if (!c.parseComplex(comp))
+            {
+                cout.flush();
                 return NULL;
+            }
             m->setValue(i,j,c);
         }
     m->setName(name);
     return m;
 }
 
-bool isLegalName(string name)
+bool isLegalName(const string name)
 {
     for (unsigned int i=0; i<name.length(); i++)
         if (name[i] < 'A' || name[i] > 'Z')
@@ -88,13 +94,9 @@ bool isLegalName(string name)
     return true;
 }
 
-void clearBuffer()
-{
-    while (cin.get() != '\n');
-}
 
 
-bool remove(List &l,string name)
+bool remove(List &l,const string name)
 {
     LinkedM *cur = l.head;
     
@@ -123,7 +125,7 @@ bool remove(List &l,string name)
     return false;
 }
 
-void printList(List &l)
+void printList(const List &l)
 {
     LinkedM *cur = l.head;
     

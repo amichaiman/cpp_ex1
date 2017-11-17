@@ -1,39 +1,56 @@
 #include <iostream>
-#include "md;
+#include "matrix.h"
+#include "complex.h"
+#include "matrixList.h"
+
+using namespace std;
+
+void clearBuffer()      //clears buffer
+{
+    while(cin.get() != '\n' && cin.eof != true);
+}
+
 
 int main()
 {
-    List list;
+    List list;  //holds linked list head
+    char input;   
     int choice;
     Matrix *m;
+    const int INVALID_INPUT = 7;    //a number not associated with action
     
     list.head = NULL;
     
-    cin.clear();
     
-    
-    cin >> choice;
-    
-    while (choice != 0)
+    while (true)
     {
+        cin >> input;
+        clearBuffer();
+        
+        if (isdigit(input))
+            choice = input - '0';
+        else
+            choice = INVALID_INPUT;
+        
         switch (choice)
         {
             case 0:
                 return 0;
-            case 1:
+            case 1:         //add matrix 
             {
                 m = getMatrix();
                 if (m)
                 {
                     addToList(list,m);
-                    printList(list);
                 }
                 else
+                {
                     cout << "ERROR: invalid input" << endl;
-                
+                    clearBuffer();
+                }
             } break;
             
-            case 2:
+            case 2:         //remove matrix
             {
                 string name;
                 cin >> name;
@@ -42,10 +59,15 @@ int main()
                     if(!remove(list,name))
                         cout << "ERROR: " << name << " does not exist" << endl;
                 }
-                printList(list);
+                else
+                {
+                    cout << "ERROR: invalid input" << endl;
+                    clearBuffer();
+                }
+                
             } break;
             
-            case 3:
+            case 3:         //multiply matrix by scalar
             {
                 string toMul;
                 string comp;
@@ -68,16 +90,18 @@ int main()
                         m->setName(res);
                         
                         addToList(list,m);
-                        printList(list);
                     }
                     else
                         cout << "ERROR: " << toMul << " does not exist" << endl;
                 }
                 else
+                {
                     cout << "ERROR: invalid input" << endl;
+                    clearBuffer();
+                }
             }break;
             
-            case 4:
+            case 4:                 //raise matrix to the power of 'power'
             {
                 string toMul;
                 int power;
@@ -98,17 +122,18 @@ int main()
                         m->setName(res);
                         
                         addToList(list,m);
-                        printList(list);
                     }
                     else
                         cout << "ERROR: " << toMul << " does not exist" << endl;
                 }
                 else
+                {
                     cout << "ERROR: invalid input" << endl;
-                
+                    clearBuffer();
+                }
             }break;
             
-            case 5:
+            case 5:         //compute matrix determinant
             {
                 string toCompute;
                 LinkedM *link;
@@ -129,10 +154,13 @@ int main()
                         cout << "ERROR: " << toCompute << " does not exist" << endl;
                 }
                 else
+                {
                     cout << "ERROR: invalid input" << endl;
+                    clearBuffer();
+                }
             }break;
             
-            case 6:
+            case 6:         //printf specific matrix
             {
                 LinkedM *link;
                 string toPrint;
@@ -148,14 +176,16 @@ int main()
                         cout << "ERROR: " << toPrint << " does not exist" << endl;
                 }
                 else
+                {
                     cout << "ERROR: invalid input" << endl;
-                
+                    clearBuffer();
+                }
                 
             }break;
+            
             default:
                 cout << "ERROR: invalid command; type 0 for exit" << endl;
         }
-        cin >> choice;
     }
     
 }

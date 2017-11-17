@@ -2,7 +2,7 @@
 
 
 
-Matrix::Matrix(int theSize, string theName)
+Matrix::Matrix(const int theSize,const string theName)
 :size(theSize),name(theName)
 {
     matrix = new Complex *[size];
@@ -11,7 +11,7 @@ Matrix::Matrix(int theSize, string theName)
         matrix[i] = new Complex[size];
 }
 
-Matrix::Matrix(int theSize)
+Matrix::Matrix(const int theSize)
 :size(theSize)
 {
     matrix = new Complex *[size];
@@ -21,12 +21,12 @@ Matrix::Matrix(int theSize)
 }
 
 
-void Matrix::setValue(int i, int j, Complex c)
+void Matrix::setValue(const int i,const int j,const Complex c)
 {
     matrix[i][j] = c;
 }
 
-Matrix *Matrix::multByScalar(Complex c)
+Matrix *Matrix::multByScalar(const Complex c)
 {
     Matrix *m = new Matrix(size);
     
@@ -37,7 +37,7 @@ Matrix *Matrix::multByScalar(Complex c)
     return m;
 }
 
-Matrix *Matrix::raiseToThePower(int n)
+Matrix *Matrix::raiseToThePower(const int n)
 {
     Matrix *m = new Matrix(size);
     
@@ -72,7 +72,7 @@ void Matrix::iMatrix()
         }
 }
 
-Matrix *Matrix::multMatrix(Complex **m1, Complex **m2)
+Matrix *Matrix::multMatrix(Complex **m1,Complex **m2)
 {
     Matrix *res = new Matrix(size);
     Complex mulRes;
@@ -97,12 +97,12 @@ Matrix *Matrix::multMatrix(Complex **m1, Complex **m2)
         
 }
 
-Complex Matrix::getComplex(int i,int j)
+Complex Matrix::getComplex(const int i,const int j) const
 {
     return matrix[i][j];
 }
 
-void Matrix::print()
+void Matrix::print() const
 {
     cout << name << " = [" << endl;
     for (int i=0; i<size; i++)
@@ -110,7 +110,8 @@ void Matrix::print()
         for (int j=0; j<size; j++)
         {
             matrix[i][j].print();
-            cout << ' ';
+            if (j!=size-1)
+                cout << ' ';
         }
     
         cout << endl;
@@ -118,12 +119,12 @@ void Matrix::print()
     cout << "]" << endl;
 }
 
-Complex **Matrix::getMatrix()
+Complex **Matrix::getMatrix() const
 {
     return matrix;
 }
 
-Complex Matrix::computeDet(int n,Complex **c)
+Complex Matrix::computeDet(const int n,Complex **c)
 {
     
     if (n==2)
