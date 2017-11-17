@@ -1,9 +1,5 @@
 #include <iostream>
-#include "matrix.h"
-#include "complex.h"
-#include "matrixList.h"
-
-using namespace std;
+#include "md;
 
 int main()
 {
